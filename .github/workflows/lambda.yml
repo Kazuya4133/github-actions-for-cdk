@@ -4,7 +4,14 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'lambda/**'
+      - '.github/**'
     pull_request:
+
+# defaults:
+# 	run:
+# 		working-directory: 
 
 jobs:
   build-test-deploy:
