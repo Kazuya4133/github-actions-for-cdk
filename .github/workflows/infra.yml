@@ -12,7 +12,7 @@ on:
 
 defaults:
   run:
-		working-directory: infra
+		- working-directory: infra
 
 jobs:
   build-test-deploy:
