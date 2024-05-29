@@ -1,4 +1,4 @@
-name: "CI/CD for CDK"
+name: "Lambda Build and Test"
 
 on:
   push:
@@ -18,8 +18,11 @@ jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
@@ -29,29 +32,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Test
+      - name: Hello World!
         run: echo Hello, World!
 
-      # - name: Unit tests
-      #   if: contains(github.event_name, 'pull_request')
-      #   run: npm run test:app
-
-      # - name: CDK Diff Check
-      #   if: contains(github.event_name, 'pull_request')
-      #   run: npm run cdk:diff
-      #   env:
-      #     AWS_DEFAULT_REGION: 'ap-northeast-1'
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      # - name: Snapshot tests
-      #   if: contains(github.event_name, 'pull_request')
-      #   run: npm run test:snapshot -- -u
-
-      # - name: CDK Deploy
-      #   if: contains(github.event_name, 'push')
-      #   run: npm run cdk:deploy
-      #   env:
-      #     AWS_DEFAULT_REGION: 'ap-northeast-1'
-      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Test
+        run: npm test
