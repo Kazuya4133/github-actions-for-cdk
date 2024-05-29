@@ -12,7 +12,7 @@ on:
 
 defaults:
   run:
-	  - working-directory: lambda
+	  working-directory: lambda
 
 jobs:
   build-test-deploy:
