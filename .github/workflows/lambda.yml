@@ -11,8 +11,8 @@ on:
   workflow_dispatch:
 
 defaults:
-	run:
-	  - working-directory: lambda
+  run:
+	  working-directory: lambda
 
 jobs:
   build-test-deploy:

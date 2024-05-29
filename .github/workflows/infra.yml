@@ -11,8 +11,8 @@ on:
   workflow_dispatch:
 
 defaults:
-	run:
-		- working-directory: infra
+  run:
+		working-directory: infra
 
 jobs:
   build-test-deploy:
