@@ -1,18 +1,18 @@
-name: "CI/CD for CDK" 
+name: "CI/CD for CDK"
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'infra/**'
-      - '.github/**'
+      - "infra/**"
+      - ".github/**"
   pull_request:
   workflow_dispatch:
 
 defaults:
   run:
-	  working-directory: infra
+    working-directory: infra
 
 jobs:
   build-test-deploy:

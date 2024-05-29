@@ -1,18 +1,18 @@
-name: "CI/CD for CDK" 
+name: "CI/CD for CDK"
 
 on:
   push:
     branches:
       - main
     paths:
-      - 'lambda/**'
-      - '.github/**'
+      - "lambda/**"
+      - ".github/**"
   pull_request:
   workflow_dispatch:
 
 defaults:
   run:
-	  working-directory: lambda
+    working-directory: lambda
 
 jobs:
   build-test-deploy:
