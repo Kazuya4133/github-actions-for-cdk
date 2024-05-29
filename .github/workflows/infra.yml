@@ -7,11 +7,12 @@ on:
     paths:
       - 'infra/**'
       - '.github/**'
-    pull_request:
+  pull_request:
+  workflow_dispatch:
 
-# defaults:
-# 	run:
-# 		working-directory: 
+defaults:
+	run:
+		working-directory: infra
 
 jobs:
   build-test-deploy:

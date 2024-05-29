@@ -7,11 +7,12 @@ on:
     paths:
       - 'lambda/**'
       - '.github/**'
-    pull_request:
+  pull_request:
+  workflow_dispatch:
 
-# defaults:
-# 	run:
-# 		working-directory: 
+defaults:
+	run:
+		working-directory: lambda
 
 jobs:
   build-test-deploy:
