@@ -13,11 +13,16 @@ on:
 defaults:
   run:
     working-directory: lambda
+    shell: bash
 
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
+      - name: actionlint
+        uses: raven-actions/actionlint@v1
+
       - name: Checkout code
         uses: actions/checkout@v4
 
