@@ -27,6 +27,8 @@ jobs:
     steps:
       - name: actionlint
         uses: raven-actions/actionlint@v1
+        with:
+          files: ./**/*.ya?ml
 
       - name: Checkout code
         uses: actions/checkout@v4
