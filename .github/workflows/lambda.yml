@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "lambda/**/*.mjs"
-      - ".github/**"
+      - ".github/**/lambda.ya?ml"
   pull_request:
   workflow_dispatch:
 
@@ -25,8 +25,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # cache: "npm"
-          # cache-dependency-path: subdir/package-lock.json
+          cache: npm
 
       - name: Setup dependencies
         run: npm ci

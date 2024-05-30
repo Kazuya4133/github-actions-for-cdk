@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - "infra/**"
-      - ".github/**"
+      - ".github/**/infra.ya?ml"
   pull_request:
   workflow_dispatch:
 
@@ -30,8 +30,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          # cache: "npm"
-          # cache-dependency-path: subdir/package-lock.json
+          cache: npm
 
       - name: Setup dependencies
         run: npm ci
