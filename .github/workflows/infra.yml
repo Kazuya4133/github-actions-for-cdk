@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: actionlint
-        uses: raven-actions/actionlint@v1
+        uses: actions/checkout@v3
         with:
           files: ./**/*.ya?ml
 
