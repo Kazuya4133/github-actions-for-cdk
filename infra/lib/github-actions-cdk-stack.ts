@@ -2,11 +2,16 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import { CfnOIDCProvider } from 'aws-cdk-lib/aws-iam';
-
+import * as s3 from 'aws-cdk-lib/aws-s3';
+import { RemovalPolicy } from 'aws-cdk-lib';
 export class GithubActionsCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
+    const s3Bucket = new s3.Bucket(this, 'S3Bucket', {
+      publicReadAccess: false,
+      removalPolicy: RemovalPolicy.DESTROY,
+    });
     const idProvider = new CfnOIDCProvider(this, 'MyOIDCProvider', {
       url: 'https://token.actions.githubusercontent.com',
       clientIdList: ['sts.amazonaws.com'],
