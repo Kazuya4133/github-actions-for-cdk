@@ -20,6 +20,10 @@ defaults:
     working-directory: infra
     shell: bash
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
@@ -28,7 +32,7 @@ jobs:
       - name: actionlint
         uses: actions/checkout@v3
 
-      - name: Checkout code
+      - name: Checkout repository code
         uses: actions/checkout@v4
 
       - name: Configure AWS credentials
