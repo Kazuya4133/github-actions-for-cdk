@@ -58,7 +58,7 @@ jobs:
 
       - name: CDK Deploy
         if: startsWith(github.event.ref, 'refs/heads/develop')
-        run: npx cdk deploy
+        run: npx cdk deploy --require-approval never
 
       - name: CDK Deploy (prod)
         if: startsWith(github.event.ref, 'refs/heads/main')
