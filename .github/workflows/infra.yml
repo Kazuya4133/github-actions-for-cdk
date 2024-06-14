@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: actionlint
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Checkout repository code
         uses: actions/checkout@v4
@@ -57,9 +57,8 @@ jobs:
         run: npx cdk diff
 
       - name: CDK Deploy
-        #   if: contains(github.event_name, 'push')
         if: startsWith(github.event.ref, 'refs/heads/develop')
-        run: npx cdk deploy
+        run: npx cdk deploy --require-approval never
 
       - name: CDK Deploy (prod)
         if: startsWith(github.event.ref, 'refs/heads/main')
