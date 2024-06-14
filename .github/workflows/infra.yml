@@ -3,12 +3,13 @@ name: "CI/CD for CDK"
 on:
   push:
     branches:
-      - main
       - develop
     paths:
       - "infrastructure/**"
       - ".github/**/infra.ya?ml"
   pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 defaults:
@@ -57,11 +58,11 @@ jobs:
         run: npx cdk diff
 
       - name: CDK Deploy
-        if: startsWith(github.event.ref, 'refs/heads/develop')
+        if: github.ref == 'refs/heads/develop'
         run: npx cdk deploy --require-approval never
 
       - name: CDK Deploy (prod)
-        if: startsWith(github.event.ref, 'refs/heads/main')
+        if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
         run: |
           echo "Manual approval required for production deployment."
           echo "Please run 'npx cdk deploy' manually in the CLI for production deployment."

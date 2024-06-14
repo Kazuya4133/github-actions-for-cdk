@@ -3,12 +3,13 @@ name: "Lambda Build and Test"
 on:
   push:
     branches:
-      - main
       - develop
     paths:
       - "lambda/**/*.mjs"
       - ".github/**/lambda.ya?ml"
   pull_request:
+    branches:
+      - main
   workflow_dispatch:
 
 defaults:
