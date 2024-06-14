@@ -32,5 +32,5 @@ export class GithubActionsCdkStack extends cdk.Stack {
   //     }),
   //   });
   //   githubActionsRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'));
-  // }
+  }
 }
