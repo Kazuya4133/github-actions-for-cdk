@@ -12,6 +12,8 @@ export class GithubActionsCdkStack extends cdk.Stack {
       publicReadAccess: false,
       removalPolicy: RemovalPolicy.DESTROY,
     });
+
+    
     const idProvider = new CfnOIDCProvider(this, 'MyOIDCProvider', {
       url: 'https://token.actions.githubusercontent.com',
       clientIdList: ['sts.amazonaws.com'],

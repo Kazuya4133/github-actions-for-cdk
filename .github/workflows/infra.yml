@@ -4,8 +4,9 @@ on:
   push:
     branches:
       - main
+      - develop
     paths:
-      - "infra/**"
+      - "infrastructure/**"
       - ".github/**/infra.ya?ml"
   pull_request:
   workflow_dispatch:

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - develop
     paths:
       - "lambda/**/*.mjs"
       - ".github/**/lambda.ya?ml"
@@ -33,14 +34,12 @@ jobs:
           # cache: npm
           # cache-dependency-path: infra/package-lock.json
 
+      # ここから要修正
       - name: Setup dependencies
-        run: npm ci
+        run: npm install
 
       - name: Build
         run: npm run build
-
-      - name: Hello World!
-        run: echo Hello, World!
 
       - name: Test
         run: npm test
