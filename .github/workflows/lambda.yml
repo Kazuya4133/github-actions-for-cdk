@@ -35,14 +35,6 @@ jobs:
           # cache: npm
           # cache-dependency-path: ./lambda/package-lock.json
 
-      - name: Initialize package.json
-        run: npm init -y
-
-      - name: Setup dependencies
-        run: |
-          npm install aws-sdk
-          npm install --save-dev jest
-
       # ここから要修正
       - name: Setup dependencies
         run: npm install
