@@ -32,8 +32,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          # cache: npm
-          # cache-dependency-path: infra/package-lock.json
+          cache: npm
+          cache-dependency-path: ./lambda/package-lock.json
 
       # ここから要修正
       - name: Setup dependencies
