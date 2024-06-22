@@ -11,26 +11,27 @@ export class GithubActionsCdkStack extends cdk.Stack {
     const s3Bucket = new s3.Bucket(this, 'S3Bucket', {
       publicReadAccess: false,
       removalPolicy: RemovalPolicy.DESTROY,
+      bucketName: "test-bucket-for-github-actions-oidc-20240622"
     });
 
-    
+
     // const idProvider = new CfnOIDCProvider(this, 'MyOIDCProvider', {
     //   url: 'https://token.actions.githubusercontent.com',
     //   clientIdList: ['sts.amazonaws.com'],
     //   thumbprintList: ['0123456789012345678901234567890123456789'],
     // });
-  //   const githubActionsRole = new iam.Role(this, 'GitHubActionsRole', {
-  //     roleName: `GitHubActionsRole`,
-  //     maxSessionDuration: cdk.Duration.hours(2),
-  //     assumedBy: new iam.WebIdentityPrincipal(idProvider.attrArn, {
-  //       StringEquals: {
-  //         ['token.actions.githubusercontent.com:aud']: 'sts.amazonaws.com',
-  //       },
-  //       StringLike: {
-  //         ['token.actions.githubusercontent.com:sub']: 'repo:Kazuya4133/github-actions-for-cdk:*',
-  //       },
-  //     }),
-  //   });
-  //   githubActionsRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'));
+    //   const githubActionsRole = new iam.Role(this, 'GitHubActionsRole', {
+    //     roleName: `GitHubActionsRole`,
+    //     maxSessionDuration: cdk.Duration.hours(2),
+    //     assumedBy: new iam.WebIdentityPrincipal(idProvider.attrArn, {
+    //       StringEquals: {
+    //         ['token.actions.githubusercontent.com:aud']: 'sts.amazonaws.com',
+    //       },
+    //       StringLike: {
+    //         ['token.actions.githubusercontent.com:sub']: 'repo:Kazuya4133/github-actions-for-cdk:*',
+    //       },
+    //     }),
+    //   });
+    //   githubActionsRole.addManagedPolicy(iam.ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'));
   }
 }
