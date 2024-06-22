@@ -10,6 +10,7 @@ export class GithubActionsCdkStack extends cdk.Stack {
 
     const s3Bucket = new s3.Bucket(this, 'S3Bucket', {
       publicReadAccess: false,
+      versioned: true,
       removalPolicy: RemovalPolicy.DESTROY,
       bucketName: "test-bucket-for-github-actions-oidc-20240622"
     });
