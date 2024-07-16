@@ -65,8 +65,8 @@ jobs:
         if: github.ref == 'refs/heads/develop'
         run: npx cdk deploy --require-approval never
 
-      - name: CDK Deploy (prod)
-        if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
-        run: |
-          echo "Manual approval required for production deployment."
-          echo "Please run 'npx cdk deploy' manually in the CLI for production deployment."
+      # - name: CDK Deploy (prod)
+      #   if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+      #   run: |
+      #     echo "Manual approval required for production deployment."
+      #     echo "Please run 'npx cdk deploy' manually in the CLI for production deployment."
