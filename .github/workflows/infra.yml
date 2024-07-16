@@ -7,9 +7,9 @@ on:
     paths:
       - "infrastructure/**"
       - ".github/**/infra.ya?ml"
-  pull_request:
-    branches:
-      - main
+  # pull_request:
+  #   branches:
+  #     - main
   workflow_run:
     workflows: ["Lambda Build and Test"]
     types:
