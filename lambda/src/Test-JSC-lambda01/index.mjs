@@ -1,11 +1,9 @@
-export const handler = async (event) => {
-  const lambdaName = process.env.LAMBDA_NAME || 'Unknown';
-  // TODO implement
+import _ from 'lodash';
+
+export async function handler(event) {
   const response = {
     statusCode: 200,
-    body: JSON.stringify(`Hello from ${lambdaName}!`),
+    body: JSON.stringify('Hello from Lambda with Layer! ' + _.capitalize('layer')),
   };
-
   return response;
-
-};
+}

@@ -1,19 +1,26 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
-import * as iam from 'aws-cdk-lib/aws-iam';
-import { CfnOIDCProvider } from 'aws-cdk-lib/aws-iam';
 import * as s3 from 'aws-cdk-lib/aws-s3';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { RemovalPolicy } from 'aws-cdk-lib';
+
 export class GithubActionsCdkStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
 
-    const s3Bucket = new s3.Bucket(this, 'S3Bucket', {
-      publicReadAccess: false,
-      versioned: true,
-      encryption: s3.BucketEncryption.S3_MANAGED,
-      removalPolicy: RemovalPolicy.DESTROY,
-      bucketName: "test-bucket-for-github-actions-oidc-20240622"
+    // Lambda Layerの作成
+    const lambdaLayer = new lambda.LayerVersion(this, 'MyLayer', {
+      code: lambda.Code.fromAsset('../lambda/lambda-layer/nodejs'),
+      compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
+      description: 'A layer to test Lambda with Node.js 20.x',
+    });
+
+    // Lambda関数の作成
+    const myFunction = new lambda.Function(this, 'MyFunction', {
+      runtime: lambda.Runtime.NODEJS_20_X,
+      code: lambda.Code.fromAsset('../lambda/src/Test-JSC-lambda01'),
+      handler: 'index.handler',
+      layers: [lambdaLayer],
     });
 
 
