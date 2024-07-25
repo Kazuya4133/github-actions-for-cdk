@@ -37,10 +37,20 @@ jobs:
 
       # ここから要修正
       - name: Setup dependencies
-        run: npm install
+        run: |
+          echo "Current directory: $(pwd)"
+          ls -la
+          npm ci
+        working-directory: lambda/lambda-layer/nodejs
 
       - name: Build
         run: npm run build
+
+      - name: Package Lambda Layer
+        run: |
+          cd lambda/lambda-layer
+          zip -r layer.zip nodejs
+        working-directory: lambda/lambda-layer
 
       # - name: Test
       #   run: npm test
