@@ -54,7 +54,7 @@ jobs:
       - name: Upload Lambda Layer Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lambda-layer-zip
+          name: lambda-layer
           path: lambda/lambda-layer
 
       # - name: Test
