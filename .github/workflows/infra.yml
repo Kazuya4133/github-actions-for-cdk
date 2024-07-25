@@ -56,7 +56,7 @@ jobs:
       - name: Download Lambda Layer Artifact
         uses: actions/download-artifact@v4
         with:
-          name: layer.zip
+          name: lambda-layer-zip
           path: ../lambda/lambda-layer
 
       - name: Bootstrap CDK
