@@ -54,7 +54,7 @@ jobs:
 
       # CDKワークフローでのアーティファクトダウンロード部分
       - name: Download Lambda Layer Artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: lambda-layer-zip
           path: lambda/lambda-layer
