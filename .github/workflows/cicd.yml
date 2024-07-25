@@ -49,10 +49,6 @@ jobs:
         run: npm run build
         working-directory: ./lambda/src
 
-      # - name: Package Lambda Layer
-      #   run: zip -r layer.zip .
-      #   working-directory: ./lambda/lambda-layer/
-
       - name: Package Lambda Layer
         run: zip -r layer.zip .
         working-directory: ./lambda/lambda-layer/
