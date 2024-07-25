@@ -1,0 +1,96 @@
+name: "CI/CD for Lambda and CDK"
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - "lambda/**/*.mjs"
+      - "infrastructure/**"
+      - ".github/**.yml"
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build-lambda-layer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Setup dependencies for Lambda Layer
+        run: npm ci
+        working-directory: ./lambda/lambda-layer/nodejs
+
+      - name: Build Lambda Layer
+        run: npm run build
+
+      - name: Package Lambda Layer
+        run: zip -r layer.zip nodejs
+        working-directory: ./lambda/lambda-layer
+
+      - name: Upload Lambda Layer Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: lambda-layer
+          path: lambda/lambda-layer/layer.zip
+
+  deploy-cdk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: build-lambda-layer
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_LOCAL }}
+          aws-region: ap-northeast-1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: ./infrastructure/package-lock.json
+
+      - name: Setup dependencies for CDK
+        run: npm ci
+        working-directory: ./infrastructure
+
+      - name: Download Lambda Layer Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: lambda-layer
+          path: infrastructure/lambda-layer
+
+      - name: Build CDK
+        run: npm run build
+        working-directory: ./infrastructure
+
+      - name: CDK Diff Check
+        run: npx cdk diff
+        working-directory: ./infrastructure
+
+      - name: CDK Deploy
+        if: github.ref == 'refs/heads/develop'
+        run: npx cdk deploy --require-approval never
+        working-directory: ./infrastructure

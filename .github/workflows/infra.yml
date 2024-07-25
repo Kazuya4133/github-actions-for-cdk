@@ -1,79 +1,79 @@
-name: "CI/CD for CDK"
+# name: "CI/CD for CDK"
 
-on:
-  push:
-    branches:
-      - develop
-    paths:
-      - "infrastructure/**"
-      - ".github/**/infra.ya?ml"
-  # pull_request:
-  #   branches:
-  #     - main
-  workflow_run:
-    workflows: ["Lambda Build and Test"]
-    types:
-      - completed
-  workflow_dispatch:
+# on:
+#   push:
+#     branches:
+#       - develop
+#     paths:
+#       - "infrastructure/**"
+#       - ".github/**/infra.ya?ml"
+#   # pull_request:
+#   #   branches:
+#   #     - main
+#   workflow_run:
+#     workflows: ["Lambda Build and Test"]
+#     types:
+#       - completed
+#   workflow_dispatch:
 
-defaults:
-  run:
-    working-directory: infrastructure
-    shell: bash
+# defaults:
+#   run:
+#     working-directory: infrastructure
+#     shell: bash
 
-permissions:
-  id-token: write
-  contents: read
+# permissions:
+#   id-token: write
+#   contents: read
 
-jobs:
-  build-test-deploy:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - name: actionlint
-        uses: actions/checkout@v4
+# jobs:
+#   build-test-deploy:
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 10
+#     steps:
+#       - name: actionlint
+#         uses: actions/checkout@v4
 
-      - name: Checkout repository code
-        uses: actions/checkout@v4
+#       - name: Checkout repository code
+#         uses: actions/checkout@v4
 
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_LOCAL }}
-          aws-region: ap-northeast-1
+#       - name: Configure AWS credentials
+#         uses: aws-actions/configure-aws-credentials@v4
+#         with:
+#           role-to-assume: ${{ secrets.AWS_IAM_ROLE_ARN_LOCAL }}
+#           aws-region: ap-northeast-1
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: ./infrastructure/package-lock.json
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: "20"
+#           cache: npm
+#           cache-dependency-path: ./infrastructure/package-lock.json
 
-      - name: Setup dependencies
-        run: npm ci
+#       - name: Setup dependencies
+#         run: npm ci
 
-      # CDKワークフローでのアーティファクトダウンロード部分
-      - name: Download Lambda Layer Artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: lambda-layer
-          path: ../lambda/lambda-layer
+#       # CDKワークフローでのアーティファクトダウンロード部分
+#       - name: Download Lambda Layer Artifact
+#         uses: actions/download-artifact@v4
+#         with:
+#           name: lambda-layer
+#           path: ../lambda/lambda-layer
 
-      - name: Bootstrap CDK
-        run: npx cdk bootstrap
+#       - name: Bootstrap CDK
+#         run: npx cdk bootstrap
 
-      - name: Build
-        run: npm run build
+#       - name: Build
+#         run: npm run build
 
-      - name: CDK Diff Check
-        run: npx cdk diff
+#       - name: CDK Diff Check
+#         run: npx cdk diff
 
-      - name: CDK Deploy
-        if: github.ref == 'refs/heads/develop'
-        run: npx cdk deploy --require-approval never
+#       - name: CDK Deploy
+#         if: github.ref == 'refs/heads/develop'
+#         run: npx cdk deploy --require-approval never
 
-      # - name: CDK Deploy (prod)
-      #   if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
-      #   run: |
-      #     echo "Manual approval required for production deployment."
-      #     echo "Please run 'npx cdk deploy' manually in the CLI for production deployment."
+#       # - name: CDK Deploy (prod)
+#       #   if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+#       #   run: |
+#       #     echo "Manual approval required for production deployment."
+#       #     echo "Please run 'npx cdk deploy' manually in the CLI for production deployment."
