@@ -10,7 +10,7 @@ export class GithubActionsCdkStack extends cdk.Stack {
 
     // Lambda Layerの作成
     const lambdaLayer = new lambda.LayerVersion(this, 'MyLayer', {
-      code: lambda.Code.fromAsset('../lambda/lambda-layer/nodejs'),
+      code: lambda.Code.fromAsset('../lambda/lambda-layer/'),
       compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
     });
 
