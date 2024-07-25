@@ -21,6 +21,7 @@ export class GithubActionsCdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset('../lambda/src/Test-JSC-lambda01'),
       handler: 'index.handler',
       layers: [lambdaLayer],
+      memorySize: 256,
     });
 
 
