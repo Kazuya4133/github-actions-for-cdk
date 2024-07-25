@@ -52,6 +52,13 @@ jobs:
       - name: Setup dependencies
         run: npm ci
 
+      # CDKワークフローでのアーティファクトダウンロード部分
+      - name: Download Lambda Layer Artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: lambda-layer-zip
+          path: ./path-to-store-lambda-layer
+
       - name: Bootstrap CDK
         run: npx cdk bootstrap
 
