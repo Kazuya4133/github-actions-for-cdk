@@ -91,6 +91,7 @@ jobs:
 
       - name: Bootstrap CDK
         run: npx cdk bootstrap
+        working-directory: ./infrastructure
 
       - name: Build CDK
         run: npm run build
