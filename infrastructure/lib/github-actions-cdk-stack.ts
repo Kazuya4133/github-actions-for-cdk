@@ -12,7 +12,6 @@ export class GithubActionsCdkStack extends cdk.Stack {
     const lambdaLayer = new lambda.LayerVersion(this, 'MyLayer', {
       code: lambda.Code.fromAsset('../lambda/lambda-layer/nodejs'),
       compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
-      description: 'A layer to test Lambda with Node.js 20.x',
     });
 
     // Lambda関数の作成
@@ -21,7 +20,6 @@ export class GithubActionsCdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset('../lambda/src/Test-JSC-lambda01'),
       handler: 'index.handler',
       layers: [lambdaLayer],
-      memorySize: 256,
     });
 
 
