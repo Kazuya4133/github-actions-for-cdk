@@ -13,6 +13,7 @@ export class GithubActionsCdkStack extends cdk.Stack {
       code: lambda.Code.fromAsset('../lambda/lambda-layer/nodejs'),
       compatibleRuntimes: [lambda.Runtime.NODEJS_20_X],
       description: 'A layer to test Lambda with Node.js 20.x',
+      compatibleArchitectures: [lambda.Architecture.ARM_64, lambda.Architecture.X86_64]
     });
 
     // Lambda関数の作成
