@@ -57,7 +57,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: layer.zip
-          path: lambda/lambda-layer
+          path: ../lambda/lambda-layer
 
       - name: Bootstrap CDK
         run: npx cdk bootstrap
