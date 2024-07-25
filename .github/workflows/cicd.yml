@@ -22,10 +22,13 @@ permissions:
   contents: read
 
 jobs:
-  build-lambda-layer:
+  build-lambda-and-lambda-layer:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: actionlint
+        uses: actions/checkout@v4
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -34,29 +37,32 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Setup dependencies for Lambda Layer
+      - name: Setup dependencies
         run: npm ci
         working-directory: ./lambda/lambda-layer/nodejs
 
-      - name: Build Lambda Layer
+      - name: Build Lambda
         run: npm run build
-        working-directory: ./lambda/lambda-layer/nodejs
+        working-directory: ./lambda/
 
       - name: Package Lambda Layer
-        run: zip -r layer.zip .
+        run: zip -r layer.zip nodejs
         working-directory: ./lambda/lambda-layer
 
       - name: Upload Lambda Layer Artifact
         uses: actions/upload-artifact@v4
         with:
           name: lambda-layer
-          path: lambda/lambda-layer/layer.zip
+          path: ./lambda/lambda-layer
 
   deploy-cdk:
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    needs: build-lambda-layer
+    needs: build-lambda-and-lambda-layer
     steps:
+      - name: actionlint
+        uses: actions/checkout@v4
+
       - name: Checkout repository code
         uses: actions/checkout@v4
 
@@ -81,7 +87,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: lambda-layer
-          path: ./infrastructure/lambda-layer
+          path: ./lambda/lambda-layer
+
+      - name: Bootstrap CDK
+        run: npx cdk bootstrap
 
       - name: Build CDK
         run: npm run build

@@ -62,7 +62,7 @@
 #       - name: Bootstrap CDK
 #         run: npx cdk bootstrap
 
-#       - name: Build
+#       - name: Busa/ild
 #         run: npm run build
 
 #       - name: CDK Diff Check

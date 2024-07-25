@@ -37,10 +37,7 @@
 
 #       # ここから要修正
 #       - name: Setup dependencies
-#         run: |
-#           echo "Current directory: $(pwd)"
-#           ls -la
-#           npm ci
+#         run: npm ci
 #         working-directory: ./lambda/lambda-layer/nodejs
 
 #       - name: Build
