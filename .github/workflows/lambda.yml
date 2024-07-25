@@ -52,7 +52,7 @@ jobs:
 
       # Lambdaワークフローのアーティファクトアップロード部分
       - name: Upload Lambda Layer Artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: lambda-layer-zip
           path: lambda/lambda-layer/layer.zip
