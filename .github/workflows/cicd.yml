@@ -40,9 +40,10 @@ jobs:
 
       - name: Build Lambda Layer
         run: npm run build
+        working-directory: ./lambda/lambda-layer/nodejs
 
       - name: Package Lambda Layer
-        run: zip -r layer.zip nodejs
+        run: zip -r layer.zip .
         working-directory: ./lambda/lambda-layer
 
       - name: Upload Lambda Layer Artifact
@@ -80,7 +81,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: lambda-layer
-          path: infrastructure/lambda-layer
+          path: ./infrastructure/lambda-layer
 
       - name: Build CDK
         run: npm run build
