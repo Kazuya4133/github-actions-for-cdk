@@ -41,7 +41,7 @@ jobs:
           echo "Current directory: $(pwd)"
           ls -la
           npm ci
-        working-directory: lambda/lambda-layer/nodejs
+        working-directory: ./lambda/lambda-layer/nodejs
 
       - name: Build
         run: npm run build
@@ -50,7 +50,7 @@ jobs:
         run: |
           cd lambda/lambda-layer
           zip -r layer.zip nodejs
-        working-directory: lambda/lambda-layer
+        working-directory: ./lambda/lambda-layer
 
       # - name: Test
       #   run: npm test
