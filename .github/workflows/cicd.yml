@@ -40,7 +40,9 @@ jobs:
           cache-dependency-path: lambda/lambda-layer/nodejs/package.json
 
       - name: Setup dependencies
-        run: npm ci
+        run: |
+          npm ci
+          ls -al
         working-directory: ./lambda/lambda-layer/nodejs
 
       - name: Build Lambda
@@ -52,8 +54,8 @@ jobs:
       #   working-directory: ./lambda/lambda-layer/
 
       - name: Package Lambda Layer
-        run: zip -r layer.zip node_modules package.json package-lock.json
-        working-directory: ./lambda/lambda-layer
+        run: zip -r layer.zip .
+        working-directory: ./lambda/lambda-layer/
 
       - name: Upload Lambda Layer Artifact
         uses: actions/upload-artifact@v4
